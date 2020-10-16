@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTesting", "IntegrationTesting\IntegrationTesting.csproj", "{EC695394-4821-45F5-8F66-65E289A2141A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTestingSandbox", "IntegrationTestingSandbox\IntegrationTestingSandbox.csproj", "{08FD3FC6-7C99-447F-98FF-7FCB6B244743}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{EC695394-4821-45F5-8F66-65E289A2141A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC695394-4821-45F5-8F66-65E289A2141A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC695394-4821-45F5-8F66-65E289A2141A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
