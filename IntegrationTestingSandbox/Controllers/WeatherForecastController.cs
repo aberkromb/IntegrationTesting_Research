@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using ClassLibrary1;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -21,9 +23,12 @@ namespace IntegrationTestingSandbox.Controllers
         // The Web API will only accept tokens 1) for users, and 2) having the "access_as_user" scope for this API
         static readonly string[] scopeRequiredByApi = new string[] {"access_as_user"};
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IDataAccess _dataAccess;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDataAccess dataAccess)
         {
             _logger = logger;
+            _dataAccess = dataAccess;
         }
 
         [HttpGet]
@@ -37,6 +42,12 @@ namespace IntegrationTestingSandbox.Controllers
                     Summary = Summaries[rng.Next(Summaries.Length)]
                 })
                 .ToArray();
+        }
+
+        [HttpGet, Route("test")]
+        public Task<string> Get2(CancellationToken cancellationToken)
+        {
+            return _dataAccess.Get(cancellationToken);
         }
     }
 }
