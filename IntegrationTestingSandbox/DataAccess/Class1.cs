@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using IntegrationTestingSandbox.DataAccess;
-using Microsoft.EntityFrameworkCore;
 
-namespace ClassLibrary1
+namespace IntegrationTestingSandbox.DataAccess
 {
     public class DataAccess : IDataAccess
     {
