@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTesting", "Integ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTestingSandbox", "IntegrationTestingSandbox\IntegrationTestingSandbox.csproj", "{08FD3FC6-7C99-447F-98FF-7FCB6B244743}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTestingTests", "IntegrationTestingTests\IntegrationTestingTests.csproj", "{B42BD186-A7EB-490B-928E-ED55459ACA5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08FD3FC6-7C99-447F-98FF-7FCB6B244743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42BD186-A7EB-490B-928E-ED55459ACA5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42BD186-A7EB-490B-928E-ED55459ACA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42BD186-A7EB-490B-928E-ED55459ACA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42BD186-A7EB-490B-928E-ED55459ACA5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
