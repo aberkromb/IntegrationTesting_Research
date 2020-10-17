@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IntegrationTestingSandbox.DataAccess;
+using IntegrationTestingSandbox.DataAccess.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -44,10 +45,12 @@ namespace IntegrationTestingSandbox.Controllers
                 .ToArray();
         }
 
-        [HttpGet, Route("test")]
-        public Task<string> Get2(CancellationToken cancellationToken)
+        [HttpGet, Route("ping")]
+        public async Task<string> Ping(CancellationToken cancellationToken)
         {
-            return _dataAccess.Get(cancellationToken);
+            await _dataAccess.Add(new Strings {String = 123.ToString()}, cancellationToken);
+            var value = (await _dataAccess.Get(cancellationToken)).String;
+            return value;
         }
     }
 }

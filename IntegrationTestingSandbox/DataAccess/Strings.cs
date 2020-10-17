@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace IntegrationTestingSandbox.DataAccess
+﻿namespace IntegrationTestingSandbox.DataAccess
 {
     public class Strings
     {
-        [Column("string")] public string String { get; set; }
+        public int Id { get; set; }
+        public string String { get; set; }
     }
 }
