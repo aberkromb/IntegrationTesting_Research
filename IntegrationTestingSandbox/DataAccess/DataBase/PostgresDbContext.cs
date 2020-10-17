@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace IntegrationTestingSandbox.DataAccess
+namespace IntegrationTestingSandbox.DataAccess.DataBase
 {
-    public class TestDbContext : DbContext
+    public class PostgresDbContext : DbContext
     {
-        public TestDbContext(DbContextOptions<TestDbContext> options) : base(options)
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         //Entities
@@ -13,7 +14,11 @@ namespace IntegrationTestingSandbox.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Strings>().ToTable("strings").HasNoKey();
+            modelBuilder
+                .Entity<Strings>()
+                .ToTable("strings")
+                .HasKey(p => p.Id)
+                .HasName("PK_Strings");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
