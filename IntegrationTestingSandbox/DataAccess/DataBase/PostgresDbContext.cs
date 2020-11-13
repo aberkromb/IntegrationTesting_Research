@@ -1,11 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace IntegrationTestingSandbox.DataAccess.DataBase
 {
     public class PostgresDbContext : DbContext
     {
-        public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
+        private readonly ILogger<PostgresDbContext> _logger;
+        private readonly PostgresOptions _options;
+
+        public PostgresDbContext(
+            IOptions<PostgresOptions> options,
+            DbContextOptions<PostgresDbContext> dbContextOptions,
+            ILogger<PostgresDbContext> logger
+            ) : base(dbContextOptions)
         {
+            _logger = logger;
+            _options = options.Value;
             Database.EnsureCreated();
         }
 
@@ -23,6 +34,7 @@ namespace IntegrationTestingSandbox.DataAccess.DataBase
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(
-                "Host=localhost; Port=5432; Database=postgres; Username=postgres; Password=mysecretpassword");
+                _options.ConnectionString
+                /*"Host=localhost; Port=5432; Database=postgres; Username=postgres; Password=mystrongpassword"*/);
     }
 }
