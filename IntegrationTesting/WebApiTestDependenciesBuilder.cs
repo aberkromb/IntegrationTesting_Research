@@ -4,6 +4,7 @@ using System.Linq;
 using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
 using IntegrationTesting.Dependencies;
+using IntegrationTesting.Dependencies.Postgres;
 using IntegrationTesting.DependenciesConfigs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
