@@ -12,21 +12,21 @@ namespace IntegrationTestingSandbox.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ApiTestController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<ApiTestController> _logger;
 
         // The Web API will only accept tokens 1) for users, and 2) having the "access_as_user" scope for this API
         static readonly string[] scopeRequiredByApi = new string[] {"access_as_user"};
 
         private readonly IDataAccess _dataAccess;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDataAccess dataAccess)
+        public ApiTestController(ILogger<ApiTestController> logger, IDataAccess dataAccess)
         {
             _logger = logger;
             _dataAccess = dataAccess;
@@ -45,10 +45,10 @@ namespace IntegrationTestingSandbox.Controllers
                 .ToArray();
         }
 
-        [HttpGet, Route("ping")]
-        public async Task<string> Ping(CancellationToken cancellationToken)
+        [HttpGet, Route("postgres")]
+        public async Task<string> InsertToPostgres([FromQuery] string toInsert ,CancellationToken cancellationToken)
         {
-            await _dataAccess.Add(new Strings {String = 123.ToString()}, cancellationToken);
+            await _dataAccess.Add(new Strings {String = toInsert}, cancellationToken);
             var value = (await _dataAccess.Get(cancellationToken)).String;
             return value;
         }

@@ -1,7 +1,5 @@
-using System;
+using System.Threading;
 using IntegrationTesting;
-using IntegrationTesting.Dependencies;
-using IntegrationTestingSandbox.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,13 +22,17 @@ namespace IntegrationTestingTests
         {
             builder.ConfigureServices((context, services) =>
             {
-                services.PostConfigure<PostgresOptions>(options =>
-                    options.ConnectionString =
-                        "Host=127.0.0.200; Port=5432; Database=postgres; Username=postgres; Password=mystrongpassword");
-                // foreach (var dependency in _dependencyResolver.GetDependencies())
-                // {
-                //     dependency.Setup(context.Configuration, services);
-                // }
+                foreach (var dependency in _dependencyManager.GetDependencies())
+                {
+                    dependency.Configure(context.Configuration, services);
+                }
+
+                var serviceProvider = services.BuildServiceProvider();
+
+                foreach (var dependency in _dependencyManager.GetDependencies())
+                {
+                    dependency.AfterDependencyStart(serviceProvider, CancellationToken.None);
+                }
             });
         }
     }

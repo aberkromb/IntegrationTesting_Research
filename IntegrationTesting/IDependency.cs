@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,10 +11,16 @@ namespace IntegrationTesting
     public interface IDependency
     {
         /// <summary>
-        ///     Устанавливает необходимые для зависимости настройки
+        ///     Устанавливает необходимые настройки после запуска зависимости
         /// </summary>
         /// <param name="contextConfiguration"></param>
         /// <param name="services"></param>
-        void Setup(IConfiguration contextConfiguration, IServiceCollection services);
+        void Configure(IConfiguration contextConfiguration, IServiceCollection services);
+
+        /// <summary>
+        ///     Выполняется после того как зависимость запустилась
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        Task AfterDependencyStart(ServiceProvider services, CancellationToken cancellationToken);
     }
 }
