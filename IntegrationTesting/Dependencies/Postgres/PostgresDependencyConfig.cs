@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 
-namespace IntegrationTesting.DependenciesConfigs
+namespace IntegrationTesting.Dependencies.Postgres
 {
     /// <summary>
     ///     Конфигурирование зависимости postgres
     /// </summary>
-    public class PostgresDependencyConfig
+    public class PostgresDependencyConfig : IDependencyConfig
     {
-        public static PostgresDependencyConfig Default = new PostgresDependencyConfig();
-
         /// <summary>
         ///     Имя образа
         /// </summary>
@@ -49,5 +47,7 @@ namespace IntegrationTesting.DependenciesConfigs
         ///     Переиспользовать если такая зависимость уже существует
         /// </summary>
         public bool ReuseDependencyIfExist { get; set; } = true;
+
+        public static PostgresDependencyConfig Default() => new PostgresDependencyConfig();
     }
 }
