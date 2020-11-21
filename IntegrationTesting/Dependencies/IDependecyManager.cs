@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 
-namespace IntegrationTesting
+namespace IntegrationTesting.Dependencies
 {
     /// <summary>
     ///     Менеджер созданных зависимостей 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IntegrationTesting
+namespace IntegrationTesting.Dependencies
 {
     internal class DependencyManager : IDependencyManager
     {
@@ -10,7 +10,7 @@ namespace IntegrationTesting
         {
             _dependencies = dependencies;
         }
-        
+
         public IEnumerable<IDependency> GetDependencies()
         {
             return _dependencies;
