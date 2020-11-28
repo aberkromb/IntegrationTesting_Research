@@ -1,3 +1,5 @@
+using System;
+
 namespace IntegrationTesting.Dependencies.Postgres
 {
     /// <summary>
@@ -8,8 +10,14 @@ namespace IntegrationTesting.Dependencies.Postgres
         /// <summary>
         ///     Добавить конфиг зависимости
         /// </summary>
-        PostgresDependencyBuilder AddConfig(IDependencyConfig dependencyConfig);
+        IDependencyBuilder AddConfig(IDependencyConfig dependencyConfig);
 
+        /// <summary>
+        ///     Добавить конфигуратор контейнера
+        /// </summary>
+        //TODO вынести в extensions
+        IDependencyBuilder AddConfigureServices(Action<IRunningDependencyContext> configureServices);
+        
         /// <summary>
         ///     Запускает зависимость
         /// </summary>

@@ -48,6 +48,6 @@ namespace IntegrationTesting.Dependencies.Postgres
         /// </summary>
         public bool ReuseDependencyIfExist { get; set; } = true;
 
-        public static PostgresDependencyConfig Default() => new PostgresDependencyConfig();
+        public static PostgresDependencyConfig Default => new PostgresDependencyConfig();
     }
 }

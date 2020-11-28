@@ -20,7 +20,7 @@ namespace IntegrationTesting.TestServer
         }
 
         public IDependencyManager DependencyManager => _dependencyManager;
-
+        
         protected override IHost CreateHost(IHostBuilder builder)
         {
             _runningDependencies = _dependenciesBuilder.Start();
