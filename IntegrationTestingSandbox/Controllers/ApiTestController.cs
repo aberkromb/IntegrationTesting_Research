@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using IntegrationTestingSandbox.DataAccess;
 using IntegrationTestingSandbox.DataAccess.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace IntegrationTestingSandbox.Controllers
 {
@@ -26,10 +28,13 @@ namespace IntegrationTestingSandbox.Controllers
 
         private readonly IDataAccess _dataAccess;
 
-        public ApiTestController(ILogger<ApiTestController> logger, IDataAccess dataAccess)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public ApiTestController(ILogger<ApiTestController> logger, IDataAccess dataAccess, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _dataAccess = dataAccess;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet]
@@ -51,6 +56,16 @@ namespace IntegrationTestingSandbox.Controllers
             await _dataAccess.Add(new Strings {String = toInsert}, cancellationToken);
             var value = (await _dataAccess.Get(cancellationToken)).String;
             return value;
+        }
+
+        [HttpGet, Route("google")]
+        public async Task<object> PingGoogle(CancellationToken cancellationToken)
+        {
+            var response = await _httpClientFactory
+                .CreateClient("google")
+                .GetAsync("http://google.com/search?q=ping", cancellationToken);
+
+            return JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
         }
     }
 }

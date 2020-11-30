@@ -24,7 +24,7 @@ namespace IntegrationTestingTests
                 new DependenciesBuilder()
                     .AddDependency(
                         new PostgresDependencyBuilder()
-                            .AddConfig(PostgresDependencyConfig.Default())
+                            .AddConfig(PostgresDependencyConfig.Default)
                             .AddConfigureServices(context =>
                             {
                                 var postgresContext = (PostgresRunningDependencyContext) context;
