@@ -7,6 +7,7 @@ using IntegrationTesting.TestServer;
 using IntegrationTestingSandbox;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 using Xunit;
 using static IntegrationTesting.Dependencies.Http.HttpMockDependencyContext;
 
@@ -15,7 +16,8 @@ namespace IntegrationTestingTests
     public class HttpMockTests  : IClassFixture<WebApplicationFactoryBuilder<Startup>>
     {
         private readonly WebApplicationFactoryBuilder<Startup> _testServer;
-        private IDependencyManager _dependencyManager => _testServer.DependencyManager;
+        private IDependencyManager DependencyManager => _testServer.DependencyManager;
+        private HttpMockDependency HttpMock => DependencyManager.GetDependency<HttpMockDependency>();
 
         public HttpMockTests(WebApplicationFactoryBuilder<Startup> factory)
         {
@@ -28,20 +30,16 @@ namespace IntegrationTestingTests
                             {
                                 var httpMockContext = (HttpMockDependencyContext) context;
                                 var (host, port) = httpMockContext.GetHostAndPort();
-                                context.Services.AddTransient(_ => new TurnRequestToMockHandler(host, port));
-                                context.Services
-                                    .AddHttpClient("google")
-                                    .AddHttpMessageHandler<TurnRequestToMockHandler>();
+                                context.Services.AddSingleton<IHttpMessageHandlerBuilderFilter>(_ => new TurnRequestToMockFilter(host, port));
                             })));
         }
 
-        [Fact]
-        public async Task T()
+        [Fact] 
+        public async Task ApiTestGoogle_MockSearchPath_ReturnExpectedValue()
         {
             // arrange
             var client = _testServer.CreateClient();
-            var httpMock = _dependencyManager.GetDependency<HttpMockDependency>();
-            httpMock.AddGetMock("/search", new { value = "mock result"});
+            HttpMock.AddGetMock("/search", new { value = "mock result"});
             
             // act
             var response = await client.GetAsync($"apitest/google");
@@ -49,6 +47,11 @@ namespace IntegrationTestingTests
             
             // assert
             result.Should().BeEquivalentTo("{\"value\": \"mock result\"}");
+        }
+        
+        private class Mock
+        {
+            
         }
     }
 }

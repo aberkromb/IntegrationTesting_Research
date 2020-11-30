@@ -16,41 +16,29 @@ namespace IntegrationTesting.Dependencies.Http
     public class HttpMockDependency : IDependency
     {
         private readonly HttpMockDependencyContext _context;
+        private readonly MountebankClient _mountebankClient;
         private HttpImposter _imposter;
         private MountebankClient _client;
 
-        public HttpMockDependency(HttpMockDependencyContext context)
+        public HttpMockDependency(HttpMockDependencyContext context, MountebankClient mountebankClient)
         {
             _context = context;
+            _mountebankClient = mountebankClient;
             _client = new MountebankClient();
         }
         
-        public Task<Requests> GetRequests()
+        public HttpStub AddGetMock(string path, object response)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task AddMock()
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpStub AddGetMock(string query, object response)
-        {
-            var (host, port) = _context.GetHostAndPort();
-            var imposter = _client.CreateHttpImposter(port, "integration-tests", recordRequests: true); 
+            var (_, port) = _context.GetHostAndPort();
+            var imposter = _client.CreateHttpImposter(port, $"{path}-mock-", recordRequests: true); 
             
             var stub = imposter.AddStub()
-                .OnPathAndMethodEqual(query, Method.Get)
+                .OnPathAndMethodEqual(path, Method.Get)
                 .ReturnsJson(HttpStatusCode.OK, response);
             
             _client.Submit(imposter);
             
             return stub;
         }
-    }
-
-    public class Requests
-    {
     }
 }

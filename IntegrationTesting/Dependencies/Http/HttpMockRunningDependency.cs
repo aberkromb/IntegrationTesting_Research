@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Ductus.FluentDocker.Services;
+using MbDotNet;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,7 +32,10 @@ namespace IntegrationTesting.Dependencies.Http
 
         public Task<IDependency> AfterDependencyStart(CancellationToken cancellationToken)
         {
-            return Task.FromResult<IDependency>(new HttpMockDependency(_context));
+            var client = new MountebankClient();
+            client.DeleteAllImposters();
+            
+            return Task.FromResult<IDependency>(new HttpMockDependency(_context, client));
         }
 
         public void Dispose()

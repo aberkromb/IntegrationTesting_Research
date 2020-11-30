@@ -8,6 +8,7 @@ using IntegrationTestingSandbox.DataAccess;
 using IntegrationTestingSandbox.DataAccess.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace IntegrationTestingSandbox.Controllers
 {
@@ -58,13 +59,13 @@ namespace IntegrationTestingSandbox.Controllers
         }
 
         [HttpGet, Route("google")]
-        public async Task<string> PingGoogle(CancellationToken cancellationToken)
+        public async Task<object> PingGoogle(CancellationToken cancellationToken)
         {
             var response = await _httpClientFactory
                 .CreateClient("google")
                 .GetAsync("http://google.com/search?q=ping", cancellationToken);
 
-            return await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
         }
     }
 }

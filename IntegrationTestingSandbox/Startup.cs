@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
@@ -41,9 +43,16 @@ namespace IntegrationTestingSandbox
 
             services.AddDbContext<PostgresDbContext>();
             services.AddTransient<IDataAccess, PostgresDataAccess>();
-            // services.AddTransient<HttpHandler>();
+
             services.AddHttpClient("google");
-            // services.AddHttpClient().AddHttpMessageHandler<HttpHandler>();;
+            services.AddHttpClient(string.Empty);
+            
+            
+            // services.AddTransient<HttpMessageHandlerBuilder>(provider =>
+            // {
+            //     var builder = provider.GetRequiredService<HttpMessageHandlerBuilder>();
+            //     return builder;
+            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
